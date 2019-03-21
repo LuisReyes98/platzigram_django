@@ -12,3 +12,6 @@ Models => Model
 ~python manage.py migrate  #ejecutara las migraciones
 
 ```
+
+pip freeze --> para validar las extensiones instaladas.
+Django-admin startproject Platzigram . --> para la creación del proyecto.

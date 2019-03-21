@@ -15,7 +15,7 @@ Including another URLconf
 
 
 """
-
+#Django
 from django.contrib import admin
 from django.urls import path
 
@@ -24,7 +24,7 @@ from platzigram import views as local_views
 from posts import views as posts_views 
 
 urlpatterns = [
-    # path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     
     path('', local_views.hello_world), #root
 
