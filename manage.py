@@ -2,6 +2,14 @@
 import os
 import sys
 
+# ALL the machine learning libraries are available in python3 as well
+# import sklearn as sk
+# import pandas as pd
+# import numpy as np
+# import matplotlib.pyplot as plt
+# import seaborn as sb
+
+
 if __name__ == '__main__':
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'platzigram.settings')
     try:
