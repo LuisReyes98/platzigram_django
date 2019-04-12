@@ -19,7 +19,6 @@ def hi(request):
   # print(request)
   
   #DEBUGGER
-  # import pdb; pdb.set_trace() #debugger
   # c + enter en consola para cerrarlo 
 
   values = request.GET['numbers']
@@ -36,8 +35,6 @@ def hi(request):
   # creating dictionary from the array
   values = {values[i]: values[i] for i in range(0, len(values), 1)}
 
-  # import pdb; pdb.set_trace() #debugger
-  
   # import pdb; pdb.set_trace() #debugger
 
   return JsonResponse(values,safe=True)

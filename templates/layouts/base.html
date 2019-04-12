@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include "layouts/meta/head.html" %}
+    {% block head_content %}
+    
+    
+    {% endblock %}
+
+    {% include "layouts/meta/styles.html" %}
+
+
+</head>
+<body>
+
+    {% include "layouts/nav.html" %}
+
+    <div class="container mt-5">
+        {% block container %}
+
+        {% endblock%}
+    </div>
+
+</body>
+</html>

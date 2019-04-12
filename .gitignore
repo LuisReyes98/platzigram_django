@@ -8,6 +8,8 @@
 .tox/
 __pycache__/*
 __pycache__
+/__pycache__/
+
 MANIFEST
 dist/
 docs/_build/
@@ -20,4 +22,7 @@ tests/report/
 
 platzigram/__pycache__/
 posts/__pycache__/
-users/pictures/*
+posts/migrations/__pycache__/*
+
+db.sqlite3
+media/
