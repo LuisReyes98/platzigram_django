@@ -39,6 +39,11 @@
               <p class="ml-4"><input type="file" name="picture" {% if not profile.picture %}required="true"{% endif %} ></p>
             </div>
           </div>
+          {% for error in form.picture.errors %}
+            <div class="alert alert-danger">
+              <b>Picture: </b> {{error}}
+            </div>
+          {% endfor %}
 
           <hr><br>
           {# Website Field  #}
@@ -58,23 +63,37 @@
               </div>
 
           </div>
+          {# Biography Filed#}
 
+          <div class="form-group">
+            <label>Biography</label>
+            <textarea 
+              class="form-control {% if form.biography.errors %}is-invalid{% endif %}" 
+              name="biography"
+            >{% if form.errors %}{{form.biography.value}}{% else %}{{ profile.biography }}{% endif %}</textarea>
+            <div class="invalid-feedback">
+              {% for error in form.biography.errors %}
+                {{error}}
+              {% endfor %}
+            </div>
+          </div>
 
-                <div class="form-group">
-                    <label>Biography</label>
-                    <textarea class="form-control" name="biography">{{ profile.biography }}</textarea>
-                </div>
-
-                <div class="form-group">
-                    <label>Phone number</label>
-                    <input
-                        class="form-control"
-                        type="text"
-                        name="phone_number"
-                        placeholder="Phone number"
-                        value="{{ profile.phone_number }}"
-                    />
-                </div>
+          {# Phone Number Field#}
+          <div class="form-group">
+              <label>Phone number</label>
+              <input
+                  class="form-control {% if form.phone_number.errors %}is-invalid{% endif %}"
+                  type="text"
+                  name="phone_number"
+                  placeholder="Phone number"
+                  value="{% if form.errors %}{{form.phone_number.value}}{% else %}{{ profile.phone_number }}{% endif %}"
+              />
+              <div class="invalid-feedback">
+              {% for error in form.phone_number.errors %}
+                {{error}}
+              {% endfor %}
+            </div>
+          </div>
 
 
                 <button type="submit" class="btn btn-primary btn-block mt-5">Update info</button>

@@ -1,5 +1,7 @@
 {% extends 'users/base.html' %}
 
+{% load widget_tweaks %}
+
 {% block head_content %}
     <title>
       Platzigram Signup
@@ -9,52 +11,29 @@
 
 {% block container %}
 
-  {% if error %}
-    <p class="alert alert-danger">{{error}}</p>
+  {% if errors %}
+    <p class="alert alert-danger">{{errors}}</p>
   {% endif %}
-  <h1>
+  <h1 class="text-center">
     Sign up!
   </h1>
-  <form action="{% url 'signup' %}" method="POST" >
+  <form action="{% url 'users:signup' %}" method="POST" >
     {% csrf_token %}
 
-    <!--Username -->
-    <div class="form-group">
+    {% for field in form  %}
+      <div class="form-group">
+        {% render_field field|add_error_class:"is-invalid" placeholder=field.label class+="form-control" %}
+        {% if field.errors %}
+          <div class="invalid-feedback">
+            {% for error in field.errors %}{{ error }}{% endfor %}
+          </div>
+        
+        {% endif %}
       
-      <input class="form-control" type="text" placeholder="Username" name="username" required="true">
-    
-    </div>
-    <!--password -->
+      </div>
+    {% endfor %}
 
-    <div class="form-group">
-      
-      <input class="form-control" type="password" placeholder="Password" name="passwd" required="true">
     
-    </div>
-    <!--password confirmation -->
-
-    <div class="form-group">
-      
-      <input class="form-control" type="password" placeholder="Password Confirmation" name="passwd_confirmation" required="true">
-    
-    </div>
-
-    <div class="form-group">
-      
-      <input class="form-control" type="text" placeholder="First Name" name="first_name" required="true">
-    
-    </div>
-    <div class="form-group">
-      
-      <input class="form-control" type="text" placeholder="Last Name" name="last_name" required="true">
-    
-    </div>
-    <div class="form-group">
-      
-      <input class="form-control" type="email" placeholder="Email address" name="email" required="true">
-    
-    </div>
-
     <button class="btn btn-primary btn-block mt-5" type="submit">
       Register
     </button>
