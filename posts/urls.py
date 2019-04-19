@@ -7,7 +7,7 @@ from posts import views
 urlpatterns = [
     # Posts
     path( route='', 
-          view=views.list_posts, 
+          view=views.PostsListView.as_view(),
           name='feed'
     ),  # root
     path( route="posts/new/", 
