@@ -8,18 +8,23 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+from django.urls import reverse_lazy
+
 #Views
 from django.views.generic.detail import DetailView
+from django.views.generic import FormView , UpdateView
 
 #Models
 from django.contrib.auth.models import User
 from posts.models import Post
+from users.models import Profile
 
 #Exceptions
 from django.db.utils import IntegrityError
 
 # Forms
-from users.forms import ProfileForm ,SignupForm
+from users.forms import SignupForm
+# from users.forms import ProfileForm, SignupForm
 
 
 # Create your views here.
@@ -42,25 +47,39 @@ def login_view(request):
 
   return render(request,'users/login.html')
 
-def signup(request):
-  """Signup View"""
 
-  # import pdb; pdb.set_trace()
-  if request.method == 'POST':
-    form = SignupForm(request.POST)
-    if form.is_valid():
-      form.save()
-      return redirect('users:login')
-  else:
-    form = SignupForm()
+# Registrar con clase
+class SignupView(FormView):
+  """ Users signup view """
+  template_name = "users/signup.html"
+  form_class = SignupForm
+  success_url = reverse_lazy('users:login')
+  
+  def form_valid(self,form):
+    form.save()
+    return super().form_valid(form)
 
-  return render(
-    request= request, 
-    template_name='users/signup.html',
-    context={
-      'form':form
-    },
-    )
+# Registrar con metodo
+# def signup(request):
+#   """Signup View"""
+
+#   # import pdb; pdb.set_trace()
+#   if request.method == 'POST':
+#     form = SignupForm(request.POST)
+#     if form.is_valid():
+#       form.save()
+#       return redirect('users:login')
+#   else:
+#     form = SignupForm()
+
+#   return render(
+#     request= request, 
+#     template_name='users/signup.html',
+#     context={
+#       'form':form
+#     },
+#     )
+
 
 @login_required
 def logout_view(request):
@@ -69,36 +88,55 @@ def logout_view(request):
   return redirect('users:login')
 
 
-@login_required
-def update_profile(request):
-  """Update a user's profile view."""
-  profile = request.user.profile
-  
-  if request.method == 'POST':
-    form = ProfileForm(request.POST,request.FILES)
-    if form.is_valid():
-      data = form.cleaned_data
+class ProfileUpdateView(LoginRequiredMixin, UpdateView):
+  """Update profile view"""
+  model = Profile
+  template_name = "users/update_profile.html"
+  fields = ['website', 'biography', 'phone_number', 'picture']
 
-      profile.website = data['website']
-      profile.phone_number = data['phone_number']
-      profile.biography = data['biography']
-      profile.picture = data['picture']
-      profile.save()
-    
-      url = reverse('users:detail', kwargs={'username': request.user.username})
-      return redirect(url)
-  else:
-    form = ProfileForm()
+  def get_object(self):
+    """Return user's profile """
+    return self.request.user.profile
+
+  def get_success_url(self):
+    """Return to user's profile"""
+    username = self.object.user.username
+    return reverse('users:detail', kwargs={'username': username})
+
+
+
+# @login_required
+# def update_profile(request):
+#   """Update a user's profile view."""
+#   profile = request.user.profile
   
-  return render(
-    request = request,
-    template_name = 'users/update_profile.html',
-    context = {
-      'profile': profile,
-      'user': request.user,
-      'form': form,
-    }
-  )
+#   if request.method == 'POST':
+#     form = ProfileForm(request.POST,request.FILES)
+#     if form.is_valid():
+#       data = form.cleaned_data
+
+#       profile.website = data['website']
+#       profile.phone_number = data['phone_number']
+#       profile.biography = data['biography']
+#       profile.picture = data['picture']
+#       profile.save()
+    
+#       url = reverse('users:detail', kwargs={'username': request.user.username})
+#       return redirect(url)
+#   else:
+#     form = ProfileForm()
+  
+#   return render(
+#     request = request,
+#     template_name = 'users/update_profile.html',
+#     context = {
+#       'profile': profile,
+#       'user': request.user,
+#       'form': form,
+#     }
+#   )
+
+
 
 # Class views
 class UserDetailView(LoginRequiredMixin, DetailView):

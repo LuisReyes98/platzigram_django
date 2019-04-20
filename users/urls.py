@@ -23,18 +23,19 @@ urlpatterns = [
 
   path(
     route= "signup/", 
-    view = views.signup, 
+    view = views.SignupView.as_view(), 
     name="signup"
   ),
 
   path(
     route= "me/profile/", 
-    view = views.update_profile, 
+    view=views.ProfileUpdateView.as_view(),
     name="update"
   ),
+
   #Posts
   path(
-    route="<str:username>/",
+    route="user/<str:username>/",
     view=views.UserDetailView.as_view(),
     name="detail"
   ),

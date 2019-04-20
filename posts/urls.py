@@ -11,7 +11,7 @@ urlpatterns = [
         name='feed'
   ),  # root
   path( route="posts/new/", 
-        view=views.create_post, 
+        view=views.PostCreateView.as_view(), 
         name='create'
   ),
   #Posts
