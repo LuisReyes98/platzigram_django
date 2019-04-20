@@ -6,8 +6,10 @@
 
 {% block container %}
 
-  {% if error %}
-    <p class="alert alert-danger">{{error}}</p>
+  {% if form.errors %}
+    <p class="alert alert-danger"> 
+      User and Password didn't match. Please try again    
+    </p>
   {% endif %}
 
   {% comment %} 

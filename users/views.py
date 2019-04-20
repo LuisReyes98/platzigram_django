@@ -7,8 +7,9 @@ from django.shortcuts import render , redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-
 from django.urls import reverse_lazy
+from django.contrib.auth import views as auth_views
+
 
 #Views
 from django.views.generic.detail import DetailView
@@ -26,26 +27,31 @@ from django.db.utils import IntegrityError
 from users.forms import SignupForm
 # from users.forms import ProfileForm, SignupForm
 
+class LoginView(auth_views.LoginView):
+  """Login View"""
+  template_name = 'users/login.html'
+  redirect_authenticated_user = True
+
 
 # Create your views here.
 
-def login_view(request):
-  # Login View
-  if request.method == 'POST':
+# def login_view(request):
+#   # Login View
+#   if request.method == 'POST':
 
-    username = request.POST['username']
-    password = request.POST['password']
+#     username = request.POST['username']
+#     password = request.POST['password']
     
-    user = authenticate(request, username=username, password=password)
-    if user is not None:
-      login(request, user)
-      # Redirect to a success page.
-      return redirect('posts:feed')
-    else:
-      # Return an 'invalid login' error message.
-      return render(request, 'users/login.html',{'error':'Invalid username and password'})
+#     user = authenticate(request, username=username, password=password)
+#     if user is not None:
+#       login(request, user)
+#       # Redirect to a success page.
+#       return redirect('posts:feed')
+#     else:
+#       # Return an 'invalid login' error message.
+#       return render(request, 'users/login.html',{'error':'Invalid username and password'})
 
-  return render(request,'users/login.html')
+#   return render(request,'users/login.html')
 
 
 # Registrar con clase
@@ -80,6 +86,10 @@ class SignupView(FormView):
 #     },
 #     )
 
+
+class LogoutView(LoginRequiredMixin, auth_views.LogoutView):
+  """Log out view"""
+  template_name = "users/loggout.html"
 
 @login_required
 def logout_view(request):
