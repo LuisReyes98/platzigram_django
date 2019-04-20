@@ -25,4 +25,6 @@ posts/__pycache__/
 posts/migrations/__pycache__/*
 
 db.sqlite3
+Ultimoreto.txt
 media/
+platzigram-33-CrateView-FormView-UpdateView/

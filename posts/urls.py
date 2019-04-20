@@ -5,13 +5,19 @@ from django.urls import path
 from posts import views
 
 urlpatterns = [
-    # Posts
-    path( route='', 
-          view=views.PostsListView.as_view(),
-          name='feed'
-    ),  # root
-    path( route="posts/new/", 
-          view=views.create_post, 
-          name='create'
-    ),
+  # Posts
+  path( route='', 
+        view=views.PostsListView.as_view(),
+        name='feed'
+  ),  # root
+  path( route="posts/new/", 
+        view=views.create_post, 
+        name='create'
+  ),
+  #Posts
+  path(
+      route='post/<slug:username>/<int:pk>/',
+      view=views.PostDetailView.as_view(),
+      name='detail'
+  )
 ]

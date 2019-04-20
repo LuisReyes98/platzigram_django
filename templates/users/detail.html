@@ -61,7 +61,7 @@
         <div class="row mt-3">  
             {% for post in posts %}
                 <div class="col-sm-4 p-5 d-flex justify-content-center align-items-center">
-                    <a href="" class="border">
+                    <a href="{% url "posts:detail" pk=post.pk username=post.user.username %}" class="border">
                         <img src="{{post.photo.url}}" alt="{{post.title}}" class="img-fluid">
                     </a>
                 </div>
