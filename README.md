@@ -3,6 +3,10 @@
 It has user control and authentication system
 upload of pictures and post creation
 
+#TODO
+- Make migrations in deploy environment
+
+
 #### Class Notes
 DJANGO posee el MTP(Model , Template , Controller)
 
