@@ -1,3 +1,9 @@
+# Instagram Clone made in DJango 
+
+It has user control and authentication system
+upload of pictures and post creation
+
+#### Class Notes
 DJANGO posee el MTP(Model , Template , Controller)
 
 MTV => MVC:
